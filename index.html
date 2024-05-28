@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no, shrink-to-fit=no" />
     <meta name="HandheldFriendly" content="true">
 
-    <title>Test Bricks</title>
+    <title>Snake</title>
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" sizes="144x144" href="icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,15 +12,15 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <test-bricks level:="0" ></test-bricks>
+    <snake-component level:="0" ></snake-component>
 
     <template id="global-styles">
         <style>
             :not(:defined) { display: none }
 
             :root, body {
-                --fg-col: #a4712f;
-                --bg-col: #010820;
+                --fg-col: #000000;
+                --bg-col: #d5d5bf;
 
                 background: var(--bg-col);
                 color: var(--fg-col);

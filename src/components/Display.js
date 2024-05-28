@@ -9,11 +9,12 @@ const getStyles = () => (`
         aspect-ratio: 3/4;
 
         border: 2px solid var(--fg-col);
-        width: calc(56.25svh - 8px);
+        height: calc(56.25svw - 8px);
+        width: calc(100vw - 8px);
         margin: 0 auto;
 
         display:  grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 4fr 1fr;
     }
 
     @media (aspect-ratio < 0.57) {
@@ -31,8 +32,6 @@ const getTemplate = (values) => (`
             class="status"
             score="${values.score}"
             level="${values.level}"
-            lines="${values.lines}"
-            nextblock="${values.nextblock}"
         >
         </status-component>
     </section>
@@ -43,18 +42,11 @@ styleSheet.replaceSync(getStyles());
 
 // <script>
 export class Display extends HTMLElement {
-    static register(name='display-component') {
-        if (!customElements.get(name)) {
-            customElements.define(name, Display);
-        }
-    }
-    static observedAttributes = ['board', 'score', 'level', 'lines', 'nextblock'];
+    static observedAttributes = ['board', 'score', 'level'];
     #values = {
         board: '[[]]',
         score: 312,
         level: 0,
-        lines: 0,
-        nextblock: '[[]]',
     };
 
     constructor() {

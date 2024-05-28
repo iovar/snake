@@ -1,4 +1,4 @@
-const width = 10;
+const width = 30;
 const height = 20;
 
 export const getEmptyBoard = () => Array.from({ length: height }, () => (Array.from({ length: width }, () => false )));

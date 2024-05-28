@@ -20,29 +20,27 @@ const getStyles = () => (`
 
     .button {
         height: calc(100% - 16px);
-        width: auto;
-        aspect-ratio: 1;
+        width: 100%;
         margin: 0 auto;
         background: var(--fg-col);
         color: var(--bg-col);
-        border-radius: 100%;
         border: 4px solid var(--fg-col);
         overflow: hidden;
         font-size: 32px;
         appearance: none;
         line-height: 100%;
         padding: 0;
+
+        &.active {
+            background: var(--bg-col);
+            color: var(--fg-col);
+        }
     }
 
     .container, .button {
         touch-action: none;
         -webkit-user-select: none;
         user-select: none;
-    }
-
-    .button.active {
-        background: var(--bg-col);
-        color: var(--fg-col);
     }
 
     @container (aspect-ratio < 5) {
@@ -72,11 +70,6 @@ const stylesSheet = new CSSStyleSheet();
 stylesSheet.replaceSync(getStyles());
 
 export class Controls extends HTMLElement {
-    static register(name='controls-component') {
-        if (!customElements.get(name)) {
-            customElements.define(name, Controls);
-        }
-    }
     static observedAttributes = ['onpress'];
     #values = { pressed: -1 }
     #keydown = null;

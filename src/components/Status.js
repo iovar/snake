@@ -37,8 +37,6 @@ const getTemplate = (values) => (`
     <section class="container">
         <h3 class="number-block score"><small>Score</small> <br />${values.score} </h3>
         <h3 class="number-block level"><small>Level</small> <br />${values.level}</h3>
-        <h3 class="number-block lines"><small>Lines</small> <br />${values.lines}</h3>
-        <block-heap class="block-heap" board:="${values.nextblock}"></block-heap>
     </section>
 `);
 
@@ -48,18 +46,11 @@ const styleSheet = new CSSStyleSheet();
 styleSheet.replaceSync(getStyles());
 
 export class StatusComponent extends HTMLElement {
-    static register(name='status-component') {
-        if (!customElements.get(name)) {
-            customElements.define(name, StatusComponent);
-        }
-    }
-    static observedAttributes = ['score', 'level', 'lines', 'nextblock'];
+    static observedAttributes = ['score', 'level'];
 
     #values = {
         score: 0,
         level: 0,
-        lines: 0,
-        nextblock: '[[]]',
     }
 
     constructor() {

@@ -17,7 +17,7 @@ const getStyles = () => (`
     .game-container {
         display: grid;
         grid-template-rows: 3fr 1fr;
-        grid-gap: 8px;
+        grid-gap: 4px;
         height: 100%;
     }
 `);
@@ -27,10 +27,8 @@ const getTemplate = (values) => (`
     <section class="game-container">
         <display-component
             board="${values.board}"
-            nextblock="${values.nextblock}"
             score="${values.score}"
             level="${values.level}"
-            lines="${values.lines}"
         ></display-component>
         <controls-component onpress="onPress"></controls-component>
     </section>
@@ -40,26 +38,14 @@ const getTemplate = (values) => (`
 const styleSheet = new CSSStyleSheet();
 styleSheet.replaceSync(getStyles());
 
-export class TestBricks extends HTMLElement {
-    static register(name='test-bricks') {
-        if (!customElements.get(name)) {
-            customElements.define(name, TestBricks);
-        }
-    }
+export class Snake extends HTMLElement {
     static observedAttributes = ['level:'];
 
     #values = {
         play: null,
-        // snake array
-        // board
-        // score
-        // direction
-        // level
         board: "[[]]",
-        nextblock: "[[]]",
         level: 0,
         score: 0,
-        lines: 0,
     }
 
     constructor() {
@@ -100,12 +86,10 @@ export class TestBricks extends HTMLElement {
         if (!event) {
             return;
         }
-        const { board, score, lines, nextBlock, gameOver } = event;
+        const { board, score, nextBlock, gameOver } = event;
         this.#values.board = JSON.stringify(board);
-        this.#values.nextblock = JSON.stringify(nextBlock);
         this.#values.score = score;
         this.#values.level = level;
-        this.#values.lines = lines;
 
         if (gameOver) {
             this.#values.play = null;

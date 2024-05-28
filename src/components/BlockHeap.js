@@ -39,11 +39,6 @@ const getTemplate = (board) => (`
 // <script>
 
 export class BlockHeap extends HTMLElement {
-    static register(name='block-heap') {
-        if (!customElements.get(name)) {
-            customElements.define(name, BlockHeap);
-        }
-    }
     static observedAttributes = ['board:'];
     width = 0;
     height = 0;

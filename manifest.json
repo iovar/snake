@@ -1,5 +1,5 @@
 {
-    "name": "TestBricks",
+    "name": "Snake",
     "start_url": "./",
     "scope": ".",
     "icons": [

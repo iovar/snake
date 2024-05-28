@@ -1,4 +1,4 @@
-const cacheName = 'testbricks-v3';
+const cacheName = 'snake-v1';
 
 const cachedFiles = [
     './',
@@ -11,7 +11,7 @@ const cachedFiles = [
     'src/components/Controls.js',
     'src/components/Display.js',
     'src/components/Status.js',
-    'src/components/TestBricks.js',
+    'src/components/Snake.js',
     'src/game/blocks.js',
     'src/game/board.js',
     'src/game/game.js',
