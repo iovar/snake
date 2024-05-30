@@ -9,7 +9,7 @@ const getStyles = () => (`
         aspect-ratio: 3/4;
 
         border: 2px solid var(--fg-col);
-        height: calc(56.25svw - 8px);
+        height: calc(54.5svw - 8px);
         width: calc(100vw - 8px);
         margin: 0 auto;
 
@@ -17,9 +17,10 @@ const getStyles = () => (`
         grid-template-columns: 4fr 1fr;
     }
 
-    @media (aspect-ratio < 0.57) {
+    @media (aspect-ratio > 1.43) {
         .container {
-            width: 100%;
+            height: 80svh;
+            width: calc(142.22svh - 8px);
         }
     }
 `);

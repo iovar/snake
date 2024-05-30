@@ -45,7 +45,6 @@ const getStyles = () => (`
 
     @container (aspect-ratio < 5) {
         .button {
-            height:  auto;
             width: 100%;
             margin: auto 0;
         }
