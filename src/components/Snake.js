@@ -73,12 +73,12 @@ export class Snake extends HTMLElement {
         if (this.#values.play) {
             const event = this.#values.play(pressed);
             this.play(event.value, this.#values.level);
-        } else if (pressed >=0 && pressed < 3) {
+        } else if (pressed === 0 || pressed === 3) {
             this.startGame();
-        } else if (pressed === 3) {
-            this.setAttribute('level:', this.#values.level < 1 ? MAX_LEVEL : this.#values.level - 1)
-        } else if (pressed === 4) {
+        } else if (pressed === 1) {
             this.setAttribute('level:', this.#values.level > MAX_LEVEL - 1 ? 0 : this.#values.level + 1)
+        } else if (pressed === 2) {
+            this.setAttribute('level:', this.#values.level < 1 ? MAX_LEVEL : this.#values.level - 1)
         }
     }
 
@@ -86,10 +86,9 @@ export class Snake extends HTMLElement {
         if (!event) {
             return;
         }
-        const { board, score, nextBlock, gameOver } = event;
+        const { board, score, gameOver } = event;
         this.#values.board = JSON.stringify(board);
         this.#values.score = score;
-        this.#values.level = level;
 
         if (gameOver) {
             this.#values.play = null;
@@ -98,7 +97,7 @@ export class Snake extends HTMLElement {
 
     startGame() {
         const { level } = this.#values;
-        const { play } = startGame(level, (event, newLevel) => this.play(event.value, newLevel));
+        const { play } = startGame(level, (value) => this.play(value));
         this.#values.play = play;
     }
 }

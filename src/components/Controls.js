@@ -11,7 +11,7 @@ const getStyles = () => (`
     .container {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-column-gap: 8px;
         padding: 8px;
         container-type: size;
@@ -54,7 +54,7 @@ const getStyles = () => (`
 
 const getTemplate = (values) => (`
     <section class="container">
-        ${['⇦ ', '⇩ ', '⇨ ', '↺ ', '↻ '].map((label, index) =>(`
+        ${['⇦ ', '⇩ ', '⇧ ', '⇨ '].map((label, index) =>(`
             <button
                  class="button ${clsj({ active: values.pressed === index })}"
                  onMouseDown="this.getRootNode().host.onDown(${index})"
@@ -80,16 +80,14 @@ export class Controls extends HTMLElement {
         this.#keydown = ({ code, shiftKey }) => {
             let pressed = -1;
 
-            if (code === 'ArrowLeft') {
+            if (code === 'ArrowLeft' || code === 'h') {
                 pressed = 0;
-            } else if (code === 'ArrowDown') {
+            } else if (code === 'ArrowDown' || code === 'j') {
                 pressed = 1;
-            } else if (code === 'ArrowRight') {
+            } else if (code === 'ArrowUp' || code === 'k') {
                 pressed = 2;
-            } else if ((code === 'Space' && shiftKey) || (code === 'ArrowUp' && !shiftKey) || code === 'KeyL') {
+            } else if (code === 'ArrowRight' || code === 'l') {
                 pressed = 3;
-            } else if ((code === 'Space' && !shiftKey) || (code === 'ArrowUp' && shiftKey) || code === 'KeyR') {
-                pressed = 4;
             }
 
             if (pressed < 0) {

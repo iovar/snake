@@ -1,58 +1,62 @@
 const width = 30;
 const height = 20;
 
-export const getEmptyBoard = () => Array.from({ length: height }, () => (Array.from({ length: width }, () => false )));
+const checkAppleChance = () => Math.random() <= (1 / (width * height));
 
-export const renderBlockOnBoard = (block, board, position) => {
-    let collision = false;
-    let outOfBounds = false;
-    let gameOver = false;
-    const updatedBoard = JSON.parse(JSON.stringify(board));
+const getApplePlace = (board) => {
+    for (let y=0; y < height; y++) {
+        for (let x=0; x < width; x++) {
+            const hasIt = checkAppleChance();
 
-    for (let y = 0; y < block.length; y++) {
-        const boardY =  y + position.y;
-        if (boardY < 0 || boardY >= board.length) {
-            outOfBounds |= (boardY >= board.length) && block[y].some((c) => c);
-            continue;
-        }
-        for (let x = 0; x < block[y].length ; x++) {
-            const boardX =  x + position.x;
-            if (boardX < 0 || boardX >= board[boardY].length) {
-                outOfBounds |= block[y][x];
-                continue;
-            }
-
-            updatedBoard[boardY][boardX] = block[y][x] || board[boardY][boardX];
-            collision ||= block[y][x] && board[boardY][boardX];
-            gameOver = collision && boardY <= 0;
-
-            if (gameOver || collision) {
-                return { collision, gameOver, board };
+            if (hasIt && !board[y][x]) {
+                return { x, y };
             }
         }
     }
 
-    return { collision, gameOver, board: updatedBoard, outOfBounds };
+    console.log('rerun');
+    return getApplePlace(board);
 }
 
-export const processBoard = (board) => {
-    let newLines = 0;
-    const extraLines = [];
-    const newBoard = board.map(
-        (row, index) => {
-            const isFull = row.every(t => t);
-            if (isFull) {
-                newLines++;
-                extraLines.push(row.map( _ => false));
-            }
+export const getNextBoard = (snake, apple) => {
+    const board = Array.from({ length: height }, (_, y) => (
+        Array.from({ length: width }, (__, x) => (
+            snake.some(p => p.x === x && p.y === y)
+        ))
+    ));
 
-            return isFull ? false : row;
-        }
-    ).filter(r => r);
+    console.log(apple);
+    const { x, y } = apple ?? getApplePlace(board);
+    board[y][x] = true;
+
+    return { board, apple: { x, y } };
+};
+
+export const getNextPosition = (move, snake, board, apple) => {
+    const newPos = {
+        x: snake[0].x,
+        y: snake[0].y,
+    };
+
+    // TODO do nothing on back move
+    if (move === 'L') {
+        newPos.x--;
+    } else if (move === 'R') {
+        newPos.x++;
+    } else if (move === 'U') {
+        newPos.y--;
+    } else if (move === 'D') {
+        newPos.y++;
+    }
+
+    const newSnake = [ newPos, ...snake.slice(0, -1) ];
+    const result = getNextBoard(newSnake, apple);
 
     return {
-        newBoard: [...extraLines, ...newBoard ],
-        newLines,
-        points: newLines * 10 + (newLines > 1 ? Math.pow(newLines, 2) : 0),
+        point: true,
+        gameOver: false,
+        snake: newSnake,
+        board: result.board,
+        apple,
     };
 }
