@@ -25,6 +25,11 @@ const moves = [
     'R',
 ];
 
+const isSameOrOpposite = (move1, move2) => (
+    [move1, move2].every((m) => ['L', 'R'].includes(m)) // LL, LR, RR
+    || [move1, move2].every((m) => ['U', 'D'].includes(m)) // UU, UD, DD
+);
+
 function* gameEngine() {
     let { snake, board, apple } = getInitState();
 
@@ -34,7 +39,7 @@ function* gameEngine() {
 
     while (!gameOver) {
         const code = yield({ board, score, gameOver });
-        if (code) {
+        if (code !== undefined && !isSameOrOpposite(move, moves[code])) {
             move = moves[code];
         }
 
@@ -43,6 +48,7 @@ function* gameEngine() {
         snake = result.snake;
         board = result.board;
         apple = result.apple;
+        gameOver = result.gameOver;
         score += result.point ? 1 : 0;
     }
 

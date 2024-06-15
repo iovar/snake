@@ -14,7 +14,6 @@ const getApplePlace = (board) => {
         }
     }
 
-    console.log('rerun');
     return getApplePlace(board);
 }
 
@@ -25,12 +24,19 @@ export const getNextBoard = (snake, apple) => {
         ))
     ));
 
-    console.log(apple);
     const { x, y } = apple ?? getApplePlace(board);
     board[y][x] = true;
 
     return { board, apple: { x, y } };
 };
+
+const outOfBounds = (pos) => (
+    pos.x < 0  || pos.y < 0 || pos.x >= width || pos.y >= height
+);
+
+const selfBit = (pos, snake) => (
+    snake.slice(0, -1).some(({ x, y }) => pos.x === x && pos.y === y)
+);
 
 export const getNextPosition = (move, snake, board, apple) => {
     const newPos = {
@@ -38,7 +44,6 @@ export const getNextPosition = (move, snake, board, apple) => {
         y: snake[0].y,
     };
 
-    // TODO do nothing on back move
     if (move === 'L') {
         newPos.x--;
     } else if (move === 'R') {
@@ -49,14 +54,29 @@ export const getNextPosition = (move, snake, board, apple) => {
         newPos.y++;
     }
 
-    const newSnake = [ newPos, ...snake.slice(0, -1) ];
-    const result = getNextBoard(newSnake, apple);
+    const gameOver = outOfBounds(newPos) || selfBit(newPos, snake)
+
+    if (gameOver) {
+        return {
+            point: false,
+            gameOver: true,
+            snake: snake,
+            board: board,
+            apple,
+        };
+    }
+
+    const gotApple = newPos.x === apple.x && newPos.y === apple.y;
+    const newSnake = gotApple
+        ? [ newPos, ...snake ]
+        : [ newPos, ...snake.slice(0, -1) ];
+    const result = getNextBoard(newSnake, gotApple ? null : apple);
 
     return {
-        point: true,
+        point: gotApple,
         gameOver: false,
         snake: newSnake,
         board: result.board,
-        apple,
+        apple: result.apple,
     };
 }
