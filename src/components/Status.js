@@ -36,7 +36,6 @@ const getStyles = () => (`
         .container {
             align-items: center;
             justify-content: flex-end;
-            gap: 16px;
         }
     }
 `);

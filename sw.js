@@ -1,4 +1,4 @@
-const cacheName = 'snake-v3';
+const cacheName = 'snake-v7';
 
 const cachedFiles = [
     './',

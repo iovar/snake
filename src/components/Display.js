@@ -9,7 +9,7 @@ const getStyles = () => (`
         aspect-ratio: 3/4;
 
         border: 2px solid var(--fg-col);
-        height: 100svh;
+        height: calc(100svh - 64px);
         width: calc(142.22svh - 8px);
         margin: 0 auto;
 

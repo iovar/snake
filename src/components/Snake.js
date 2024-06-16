@@ -12,6 +12,7 @@ const getStyles = () => (`
         align-items: center;
         height: 100%;
         width: 100%;
+        padding-top: 64px;
     }
 
 `);
