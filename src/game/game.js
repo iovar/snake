@@ -20,8 +20,8 @@ const getInitState = () => {
 
 const moves = [
     'L',
-    'D',
     'U',
+    'D',
     'R',
 ];
 

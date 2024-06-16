@@ -1,4 +1,4 @@
-const cacheName = 'snake-v1';
+const cacheName = 'snake-v3';
 
 const cachedFiles = [
     './',
@@ -10,11 +10,11 @@ const cachedFiles = [
     'src/components/BlockHeap.js',
     'src/components/Controls.js',
     'src/components/Display.js',
-    'src/components/Status.js',
     'src/components/Snake.js',
-    'src/game/blocks.js',
+    'src/components/Status.js',
     'src/game/board.js',
     'src/game/game.js',
+    'src/lib/dom.js',
     'src/lib/proxy.js',
 ];
 

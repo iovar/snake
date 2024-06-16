@@ -9,18 +9,18 @@ const getStyles = () => (`
         aspect-ratio: 3/4;
 
         border: 2px solid var(--fg-col);
-        height: calc(54.5svw - 8px);
-        width: calc(100vw - 8px);
+        height: 100svh;
+        width: calc(142.22svh - 8px);
         margin: 0 auto;
 
         display:  grid;
-        grid-template-columns: 4fr 1fr;
+        grid-template-columns: 9fr 3fr;
     }
 
-    @media (aspect-ratio > 1.43) {
+    @media (orientation: portrait) {
         .container {
-            height: 80svh;
-            width: calc(142.22svh - 8px);
+            width: calc(100vw - 8px);
+            grid-template-columns: 1fr;
         }
     }
 `);

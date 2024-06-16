@@ -9,17 +9,11 @@ const getStyles = () => (`
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         height: 100%;
         width: 100%;
-        padding-top: 35px;
     }
 
-    .game-container {
-        display: grid;
-        grid-template-rows: 3fr 1fr;
-        grid-gap: 4px;
-        height: 100%;
-    }
 `);
 //    </style>
 
@@ -30,7 +24,6 @@ const getTemplate = (values) => (`
             score="${values.score}"
             level="${values.level}"
         ></display-component>
-        <controls-component onpress="onPress"></controls-component>
     </section>
 `);
 
@@ -52,6 +45,11 @@ export class Snake extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.#values = proxify(this, this.#values);
+        window.addEventListener("message", (event) => {
+            if (event.data?.type === 'controls:onclick') {
+                this.onPress(event.data);
+            }
+        });
     }
 
     connectedCallback() {

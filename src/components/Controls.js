@@ -9,18 +9,20 @@ const getStyles = () => (`
     }
 
     .container {
-        width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-column-gap: 8px;
-        padding: 8px;
-        container-type: size;
-        height: 100%;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+
+        transform: rotate3d(0, 0, 1, -45deg);
+
+        width: fit-content;
+        flex: 0 1 auto;
+        margin: 0 auto;
     }
 
     .button {
-        height: calc(100% - 16px);
-        width: 100%;
+        min-width: 64px;
+        aspect-ratio: 1;
         margin: 0 auto;
         background: var(--fg-col);
         color: var(--bg-col);
@@ -35,6 +37,24 @@ const getStyles = () => (`
             background: var(--bg-col);
             color: var(--fg-col);
         }
+
+        &:nth-of-type(1) {
+            border-top-left-radius: 100%;
+        }
+        &:nth-of-type(2) {
+            border-top-right-radius: 100%;
+        }
+        &:nth-of-type(3) {
+            border-bottom-left-radius: 100%;
+        }
+        &:nth-of-type(4) {
+            border-bottom-right-radius: 100%;
+        }
+
+        & > .button-label {
+            transform: rotate3d(0, 0, 1, 45deg);
+            display: inline-block;
+        }
     }
 
     .container, .button {
@@ -42,6 +62,7 @@ const getStyles = () => (`
         -webkit-user-select: none;
         user-select: none;
     }
+
 
     @container (aspect-ratio < 5) {
         .button {
@@ -54,12 +75,12 @@ const getStyles = () => (`
 
 const getTemplate = (values) => (`
     <section class="container">
-        ${['⇦ ', '⇩ ', '⇧ ', '⇨ '].map((label, index) =>(`
+        ${['⇦ ', '⇧ ', '⇩ ', '⇨ '].map((label, index) =>(`
             <button
                  class="button ${clsj({ active: values.pressed === index })}"
                  onMouseDown="this.getRootNode().host.onDown(${index})"
                  onMouseUp="this.getRootNode().host.onUp(${index})"
-             >${label}</button>
+             ><span class="button-label">${label}</span></button>
         `)).join('')}
     </section>
 `);
@@ -82,9 +103,9 @@ export class Controls extends HTMLElement {
 
             if (code === 'ArrowLeft' || code === 'h') {
                 pressed = 0;
-            } else if (code === 'ArrowDown' || code === 'j') {
-                pressed = 1;
             } else if (code === 'ArrowUp' || code === 'k') {
+                pressed = 1;
+            } else if (code === 'ArrowDown' || code === 'j') {
                 pressed = 2;
             } else if (code === 'ArrowRight' || code === 'l') {
                 pressed = 3;

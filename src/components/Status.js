@@ -6,6 +6,7 @@ import { proxify } from '../lib/proxy.js';
 const getStyles = () => (`
     :host {
         display: block;
+        overflow: hidden;
     }
 
     .container {
@@ -30,6 +31,14 @@ const getStyles = () => (`
         border-radius: 4px;
         padding: 4px 16px;
     }
+
+    @media (orientation: portrait) {
+        .container {
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+        }
+    }
 `);
 // </style>
 
@@ -37,6 +46,8 @@ const getTemplate = (values) => (`
     <section class="container">
         <h3 class="number-block score"><small>Score</small> <br />${values.score} </h3>
         <h3 class="number-block level"><small>Level</small> <br />${values.level}</h3>
+        <controls-component onpress="onPress"></controls-component>
+        &nbsp;
     </section>
 `);
 
@@ -70,6 +81,10 @@ export class StatusComponent extends HTMLElement {
 
     render() {
         updateDom(this.shadowRoot, getTemplate(this.#values));
+    }
+
+    onPress(event) {
+        window.postMessage({ type: 'controls:onclick', detail: event.detail });
     }
 }
 
